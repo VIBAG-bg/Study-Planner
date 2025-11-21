@@ -19,7 +19,79 @@ namespace StudentStudyPlanner.Forms
         {
             InitializeComponent();
             dataManager = DataManager.Instance;
+            
+            // Добавяме примерни данни при първо стартиране
+            // Add sample data on first startup
+            if (dataManager.GetAllCourses().Count == 0)
+            {
+                InitializeSampleData();
+            }
+            
             LoadCourses();
+        }
+
+        /// <summary>
+        /// Инициализира примерни данни за демонстрация
+        /// Initializes sample data for demonstration
+        /// </summary>
+        private void InitializeSampleData()
+        {
+            // Създаваме примерен курс по C#
+            var csharpCourse = new Course
+            {
+                Name = "Обектно-ориентирано програмиране",
+                Code = "CSCB579",
+                Instructor = "доц. Иван Петров",
+                Semester = "Зимен 2024/2025"
+            };
+            dataManager.AddCourse(csharpCourse);
+
+            // Добавяме примерни задачи за C# курса
+            csharpCourse.AddTask(new Homework
+            {
+                Name = "Класове и обекти",
+                Description = "Имплементация на класове Student и Course",
+                Deadline = DateTime.Now.AddDays(7),
+                Priority = Enums.Priority.High,
+                Status = Enums.TaskStatus.InProgress,
+                Subject = "C# OOP",
+                ExerciseNumber = "Упражнение 3"
+            });
+
+            csharpCourse.AddTask(new Exam
+            {
+                Name = "Междинен изпит",
+                Description = "Изпит по наследяване и полиморфизъм",
+                Deadline = DateTime.Now.AddDays(14),
+                Priority = Enums.Priority.High,
+                Status = Enums.TaskStatus.NotStarted,
+                Subject = "Обектно-ориентирано програмиране",
+                ExamTime = "10:00",
+                Location = "Зала 301"
+            });
+
+            // Създаваме примерен курс по бази данни
+            var dbCourse = new Course
+            {
+                Name = "Бази данни",
+                Code = "CSCB515",
+                Instructor = "проф. Мария Иванова",
+                Semester = "Зимен 2024/2025"
+            };
+            dataManager.AddCourse(dbCourse);
+
+            // Добавяме примерен проект
+            dbCourse.AddTask(new Project
+            {
+                Name = "Система за управление на библиотека",
+                Description = "Проектиране и имплементация на база данни за библиотека",
+                Deadline = DateTime.Now.AddDays(30),
+                Priority = Enums.Priority.Medium,
+                Status = Enums.TaskStatus.NotStarted,
+                Subject = "Бази данни",
+                TeamMembers = "Аз, Георги, Стела",
+                Technologies = "SQL Server, Entity Framework"
+            });
         }
 
         /// <summary>
