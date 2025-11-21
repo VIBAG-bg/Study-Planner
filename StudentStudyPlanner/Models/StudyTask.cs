@@ -81,5 +81,15 @@ namespace StudentStudyPlanner.Models
         {
             Status = Enums.TaskStatus.Completed;
         }
+
+        /// <summary>
+        /// Връща текстово представяне на задачата
+        /// Returns string representation of the task
+        /// </summary>
+        /// <returns>Текстово представяне</returns>
+        public override string ToString()
+        {
+            return $"[{Type}] {Name} - {Deadline:dd.MM.yyyy} ({Status})";
+        }
     }
 }
