@@ -7,10 +7,11 @@ namespace StudentStudyPlanner.Models
     public class DataManager
     {
         /// <summary>
-        /// Singleton инстанция на DataManager
-        /// Singleton instance of DataManager
+        /// Thread-safe Lazy инстанция на DataManager
+        /// Thread-safe Lazy instance of DataManager
         /// </summary>
-        private static DataManager? instance;
+        private static readonly Lazy<DataManager> lazyInstance = 
+            new Lazy<DataManager>(() => new DataManager());
 
         /// <summary>
         /// Списък с всички курсове (използваме List<T> вместо база данни)
@@ -28,21 +29,10 @@ namespace StudentStudyPlanner.Models
         }
 
         /// <summary>
-        /// Свойство за достъп до единствената инстанция
-        /// Property for accessing the single instance
+        /// Свойство за достъп до единствената инстанция (thread-safe)
+        /// Property for accessing the single instance (thread-safe)
         /// </summary>
-        public static DataManager Instance
-        {
-            get
-            {
-                // Ако все още няма инстанция, създаваме нова
-                if (instance == null)
-                {
-                    instance = new DataManager();
-                }
-                return instance;
-            }
-        }
+        public static DataManager Instance => lazyInstance.Value;
 
         /// <summary>
         /// Добавя нов курс
